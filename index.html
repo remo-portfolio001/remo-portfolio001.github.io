@@ -1,1 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Remo's Digital Den | Cybersecurity Enthusiast</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Base Styling & Neon Theme Variables */
+        :root {
+            --neon-color: #00ff99; /* Classic Neon Green */
+            --bg-color: #0d1117; /* Dark background for contrast */
+            --glow-color: rgba(0, 255, 153, 0.4);
+            --border-radius: 12px;
+            --font-family: 'Consolas', 'Courier New', monospace;
+        }
 
+        /* Basic Reset and Body Styles */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-family);
+            background-color: var(--bg-color);
+            color: #f0f6f9; /* Light text color */
+            line-height: 1.6;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Main Container for Responsiveness */
+        .container {
+            width: 100%;
+            max-width: 900px; /* Max width for desktop readability */
+            padding: 20px;
+            display: grid;
+            gap: 30px;
+        }
+
+        /* Global Box Style - The Core Design Element */
+        .neon-box {
+            background-color: rgba(13, 17, 23, 0.7); /* Subtle transparency */
+            border: 2px solid var(--neon-color);
+            border-radius: var(--border-radius);
+            padding: 25px;
+            transition: all 0.3s ease-in-out;
+            box-shadow: 0 0 10px var(--glow-color),
+                        inset 0 0 5px var(--glow-color); /* Subtle inner glow */
+            /* The 'classic-casual current lines live' effect is represented by the neon border and glow */
+        }
+
+        /* Interactive Hover/Touch Animation */
+        .neon-box:hover {
+            transform: translateY(-5px) scale(1.01);
+            box-shadow: 0 0 20px var(--neon-color),
+                        0 0 40px var(--glow-color),
+                        inset 0 0 10px var(--neon-color);
+            cursor: pointer;
+            border-color: #66ffc2; /* Brighter on hover */
+        }
+        
+        /* Typography */
+        h1 {
+            color: var(--neon-color);
+            font-size: 2.5em;
+            text-align: center;
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px var(--glow-color);
+        }
+
+        h2 {
+            font-size: 1.8em;
+            color: #fff;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 2px solid var(--neon-color);
+            padding-bottom: 5px;
+            text-shadow: 0 0 5px var(--glow-color);
+        }
+
+        p {
+            margin-bottom: 15px;
+        }
+
+        /* Specific Section Styling */
+        #about-me .neon-box {
+            grid-column: 1 / -1;
+        }
+
+        #skills-projects {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        /* Skills List */
+        .skills-list p {
+            background-color: rgba(0, 255, 153, 0.1);
+            color: var(--neon-color);
+            padding: 8px 15px;
+            border-radius: 8px;
+            display: inline-block;
+            margin-right: 10px;
+            margin-bottom: 10px;
+            transition: background-color 0.2s;
+        }
+
+        .skills-list p:hover {
+             background-color: rgba(0, 255, 153, 0.25);
+        }
+
+
+        /* Social Media Icons (Logos) */
+        #connect .neon-box {
+            text-align: center;
+        }
+
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 20px;
+        }
+
+        .social-icon {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: var(--neon-color);
+            transition: all 0.3s ease-in-out;
+            font-size: 1em; /* Smaller text for better logo focus */
+        }
+
+        .social-icon i {
+            font-size: 3em; /* Icon size */
+            filter: drop-shadow(0 0 5px var(--glow-color));
+        }
+
+        .social-icon:hover {
+            color: #66ffc2;
+            transform: scale(1.1);
+        }
+
+        /* Footer and Motto */
+        .motto {
+            font-size: 1.5em;
+            color: #fff;
+            text-align: center;
+            margin: 40px 0 20px;
+            font-style: italic;
+            text-shadow: 0 0 10px var(--neon-color);
+        }
+
+        footer {
+            width: 100%;
+            max-width: 900px;
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px dashed var(--neon-color);
+            font-size: 0.9em;
+            color: #aaa;
+        }
+        
+        footer span {
+            color: var(--neon-color);
+        }
+
+        /* Final Visual Message */
+        .final-visuals {
+            text-align: center;
+            margin: 50px 0;
+            padding: 20px;
+            font-size: 1.2em;
+            color: #fff;
+            text-shadow: 0 0 15px var(--neon-color);
+            background: linear-gradient(45deg, rgba(0, 255, 153, 0.05), rgba(13, 17, 23, 0));
+            border-radius: var(--border-radius);
+        }
+
+
+        /* Media Queries for Responsiveness */
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            h1 {
+                font-size: 2em;
+            }
+
+            h2 {
+                font-size: 1.5em;
+            }
+
+            #skills-projects {
+                grid-template-columns: 1fr; /* Stack columns on smaller screens */
+            }
+
+            .neon-box {
+                padding: 20px;
+            }
+
+            .social-icon i {
+                font-size: 2.5em;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-terminal"></i> Welcome to Remo's Digital World <i class="fas fa-terminal"></i></h1>
+        </header>
+
+        <section id="about-me">
+            <div class="neon-box">
+                <h2><i class="fas fa-rocket"></i> About Me</h2>
+                <p>Hello! My name is **Remo**, and I’m an enthusiastic 8th-grade student from **Bihar** with a deep passion for **computer science and technology**. Ever since I was introduced to the digital world, I’ve been fascinated by how code shapes everything around us. I spend most of my time learning programming languages such as **C++** and **HTML**, experimenting with **CSS** for design, and exploring the exciting field of **ethical hacking and cybersecurity**.</p>
+                
+                <p>📊 I believe in **smart work, creativity, and a positive mindset**. Instead of memorizing blindly, I enjoy understanding concepts deeply and applying them to real-life projects. I often challenge myself with new tools and technologies, whether it’s building a simple webpage, trying out Linux systems, or learning the logic behind hacking in a safe and ethical way.</p>
+                
+                <p>📚 Although I consider myself an “average” student in academics, I have my own perspective: if someone can score 80% by studying just two days before the exam, then achieving 100% would simply require ten days of preparation. This thought keeps me motivated to push my limits and improve step by step.</p>
+                
+                <p>🧑🏻‍💻 Beyond coding, I am curious about how the internet works, how systems can be secured, and how creativity can blend with technology. My hobbies include listening to music, exploring new software, and sometimes gaming to refresh my mind.</p>
+            </div>
+        </section>
+
+        <section id="skills-projects">
+            
+            <div id="skills" class="neon-box">
+                <h2><i class="fas fa-tools"></i> Skills & Tools</h2>
+                <div class="skills-list">
+                    <p>Languages: C++, HTML, CSS (beginner but improving every day)</p>
+                    <p>Interests: Ethical Hacking, Cybersecurity, Web Development</p>
+                    <p>Platforms: GitHub, Kali Linux, Termux</p>
+                </div>
+            </div>
+
+            <div id="projects" class="neon-box">
+                <h2><i class="fas fa-map-pin"></i> Projects & Experiments</h2>
+                <ul>
+                    <li>Created my own personal website (**this one!**) to showcase my learning journey.</li>
+                    <li>Experimented with different web design effects and UI concepts.</li>
+                    <li>Started exploring cybersecurity tools and the basics of penetration testing.</li>
+                </ul>
+            </div>
+            
+            <div id="goals" class="neon-box" style="grid-column: 1 / -1;">
+                <h2><i class="fas fa-crosshairs"></i> Future Goals</h2>
+                <p>My dream is to become a professional **cybersecurity expert and ethical hacker**, contributing to a safer and smarter digital world. In the short term, I aim to improve my coding knowledge, build more projects, and keep learning every single day.</p>
+            </div>
+        </section>
+
+        <section id="connect">
+            <div class="neon-box">
+                <h2><i class="fas fa-globe-americas"></i> Connect With Me</h2>
+                <p>I’d love to connect and share ideas! Instead of plain text links, I prefer showcasing only the official app icons with a modern, sleek visual style:</p>
+                
+                <div class="social-icons">
+                    <a href="https://www.instagram.com/xnr1___?igsh=dHp2MWRyY2JyYnNi" target="_blank" class="social-icon" aria-label="Instagram">
+                        <i class="fab fa-instagram"></i>
+                        <span>xnr1___</span>
+                    </a>
+                    <a href="https://www.snapchat.com/add/itxxremo_12?share_id=rP0J7GZUXLc&locale=en-GB" target="_blank" class="social-icon" aria-label="Snapchat">
+                        <i class="fab fa-snapchat-ghost"></i>
+                        <span>itxxremo_12</span>
+                    </a>
+                    <a href="mailto:itxxremo@gmail.com" class="social-icon" aria-label="Gmail">
+                        <i class="fas fa-envelope"></i>
+                        <span>itxxremo@gmail.com</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <div class="motto">
+            ⚡ Personal Motto:
+            <br>“Hack the system, but never the trust.”
+        </div>
+
+        <div class="final-visuals">
+            <i class="fas fa-bolt"></i> **Crafted with Code & <i class="fas fa-heart"></i>** <i class="fas fa-bolt"></i><br>
+            *This website utilizes a **classic-casual line design** with **tactile, responsive visuals** that look best on all devices.*
+        </div>
+
+    </div> <footer>
+        © 2025 Remo. All Rights Reserved.
+        <br>Crafted in the Shadows, Released to the Web....
+        <br>Designed & Developed with code and <span>&#x2764;</span> by remo
+    </footer>
+
+</body>
+</html>
