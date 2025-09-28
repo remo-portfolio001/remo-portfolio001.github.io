@@ -1,1 +1,356 @@
-      
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Remo — Neon Classic Casual</title>
+  <meta name="description" content="Personal site for Remo — neon classic-casual particle background, responsive UI, and low-volume background music." />  <!-- Google Font -->  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">  <style>
+    :root{
+      --bg:#071020;
+      --card-bg: rgba(255,255,255,0.02);
+      --neon: #7ef9ff;
+      --accent: #ff6bcb;
+      --glass: rgba(255,255,255,0.04);
+      --card-radius: 18px;
+      --max-width: 1100px;
+      --font: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0;background:var(--bg);font-family:var(--font);color:#e6f6ff}
+
+    /* canvas occupies full background */
+    #bg-canvas{position:fixed;inset:0;z-index:0;display:block}
+
+    /* page shell */
+    .wrap{position:relative;z-index:2;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:48px 24px}
+    .site{width:100%;max-width:var(--max-width);margin:0 auto}
+
+    /* header */
+    header{display:flex;align-items:center;justify-content:space-between;margin-bottom:28px}
+    .brand{display:flex;align-items:center;gap:14px}
+    .logo{width:56px;height:56px;border-radius:12px;display:grid;place-items:center;background:linear-gradient(135deg,var(--neon),var(--accent));box-shadow:0 6px 24px rgba(127,249,255,0.06);font-weight:800;color:#021018}
+    h1{font-size:18px;margin:0}
+    p.tag{margin:0;font-size:13px;opacity:0.9}
+
+    /* main grid */
+    .grid{display:grid;grid-template-columns:1fr 380px;gap:22px;align-items:start}
+
+    /* left content (cards)*/
+    .cards{display:grid;gap:18px}
+    .card{background:var(--card-bg);backdrop-filter: blur(6px);border-radius:var(--card-radius);padding:18px;border:1px solid rgba(255,255,255,0.04);position:relative;overflow:hidden;transition:transform .35s cubic-bezier(.2,.9,.25,1),box-shadow .35s}
+    .card::before{content:"";position:absolute;inset:-2px;border-radius:inherit;pointer-events:none;box-shadow:0 0 32px rgba(126,249,255,0.03) inset}
+    .card:hover{transform:translateY(-8px);box-shadow:0 20px 50px rgba(2,16,24,0.6)}
+
+    /* neon bordered boxes */
+    .neon-box{border-radius:14px;padding:14px;border:2px solid rgba(126,249,255,0.08);position:relative;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));box-shadow:0 6px 30px rgba(126,249,255,0.02);transition:transform .28s, box-shadow .28s}
+    .neon-box .title{display:flex;align-items:center;gap:12px}
+    .neon-box .title h2{margin:0;font-size:16px}
+    .neon-box:hover{transform:translateY(-6px) scale(1.01);box-shadow:0 30px 60px rgba(126,249,255,0.08), 0 0 40px rgba(255,107,203,0.03)}
+
+    /* soft glowing outline using pseudo-element */
+    .neon-box::after{content:"";position:absolute;inset:0;border-radius:14px;pointer-events:none;box-shadow:0 0 48px rgba(126,249,255,0.06);mix-blend-mode:screen}
+
+    /* about me */
+    .about p{margin:12px 0;line-height:1.5;color:rgba(230,246,255,0.95)}
+    .skills{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+    .chip{padding:8px 12px;border-radius:999px;background:var(--glass);font-size:13px;border:1px solid rgba(255,255,255,0.02)}
+
+    /* right column */
+    .sidebar{position:sticky;top:28px}
+    .profile{display:grid;grid-template-columns:88px 1fr;gap:12px;align-items:center}
+    .avatar{width:88px;height:88px;border-radius:14px;background:linear-gradient(135deg,var(--neon),var(--accent));display:grid;place-items:center;font-weight:800;color:#021018}
+
+    /* social icons */
+    .socials{display:flex;gap:10px;margin-top:12px}
+    .socials a{display:inline-grid;place-items:center;width:42px;height:42px;border-radius:10px;background:rgba(255,255,255,0.02);text-decoration:none}
+
+    /* footer */
+    footer{margin-top:28px;padding:18px;border-radius:14px;background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.008));text-align:center;font-size:13px;color:rgba(230,246,255,0.85);border:1px solid rgba(255,255,255,0.02)}
+
+    /* audio control */
+    .audio-toggle{position:fixed;right:18px;bottom:18px;z-index:6;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));backdrop-filter:blur(6px);border-radius:12px;padding:10px;border:1px solid rgba(255,255,255,0.04);display:flex;gap:8px;align-items:center}
+    .btn{cursor:pointer;border:0;padding:8px 12px;border-radius:10px;background:transparent;color:var(--neon);font-weight:600}
+
+    /* responsive */
+    @media (max-width:980px){
+      .grid{grid-template-columns:1fr}
+      .sidebar{position:relative;top:0}
+    }
+    @media (max-width:520px){
+      .wrap{padding:20px 12px}
+      .logo{width:48px;height:48px}
+    }
+
+    /* subtle focus states */
+    a:focus,button:focus{outline:2px solid rgba(126,249,255,0.12);outline-offset:3px}
+
+  </style></head>
+<body><canvas id="bg-canvas" aria-hidden="true"></canvas>
+
+<div class="wrap">
+  <main class="site">
+    <header>
+      <div class="brand">
+        <div class="logo">R</div>
+        <div>
+          <h1>Remo</h1>
+          <p class="tag">Neon — Classic Casual · Student · Web Experimenter</p>
+        </div>
+      </div><nav aria-label="primary">
+    <button class="btn" id="play-pause">Play</button>
+  </nav>
+</header>
+
+<div class="grid">
+  <section class="cards">
+
+    <article class="card neon-box about">
+      <div class="title"><h2>🚀 About Me</h2></div>
+      <p>Hello! My name is <strong>Remo</strong>, and I’m an enthusiastic 8th-grade student from Bihar with a deep passion for computer science and technology. Ever since I discovered the digital world, I’ve been fascinated by how code shapes everything around us. I spend my time learning programming languages like <strong>C++</strong> and <strong>HTML</strong>, experimenting with <strong>CSS</strong> for design, and exploring ethical hacking and cybersecurity.</p>
+      <p>I believe in smart work, creativity, and a positive mindset. Instead of rote memorization, I focus on understanding concepts deeply and applying them in projects. I enjoy building web pages, trying Linux tools, and learning the logic behind hacking in a safe and ethical way.</p>
+
+      <div class="skills" aria-hidden>
+        <span class="chip">C++</span>
+        <span class="chip">HTML</span>
+        <span class="chip">CSS</span>
+        <span class="chip">Ethical Hacking</span>
+        <span class="chip">GitHub</span>
+        <span class="chip">Kali/Termux</span>
+      </div>
+    </article>
+
+    <article class="card neon-box">
+      <h2>📌 Projects & Experiments</h2>
+      <p>Created this personal website to showcase my learning journey. I experiment with web design effects, UI concepts, and the basics of cybersecurity and penetration testing.</p>
+    </article>
+
+    <article class="card neon-box">
+      <h2>🎯 Future Goals</h2>
+      <p>I aim to become a professional cybersecurity expert and ethical hacker, contributing to a safer digital world. For now, I’m focused on improving my coding skills and building more projects every day.</p>
+    </article>
+
+  </section>
+
+  <aside class="sidebar">
+    <div class="card profile neon-box">
+      <div class="profile">
+        <div class="avatar">R</div>
+        <div>
+          <div style="display:flex;align-items:center;justify-content:space-between"><strong>Remo</strong><span style="font-size:12px;opacity:.9">8th grade · Bihar</span></div>
+          <p style="margin:8px 0 0;font-size:13px;opacity:.95">"Hack the system, but never the trust."</p>
+        </div>
+      </div>
+
+      <div class="socials" aria-label="social links">
+        <a href="https://instagram.com/xnr1___" target="_blank" rel="noopener" title="Instagram">
+          <!-- Instagram SVG -->
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="2" width="20" height="20" rx="5" stroke="currentColor" stroke-width="1.2"/><circle cx="12" cy="12" r="3.2" stroke="currentColor" stroke-width="1.2"/><circle cx="17.5" cy="6.5" r="0.6" fill="currentColor"/></svg>
+        </a>
+        <a href="https://snapchat.com/add/itxxremo_12" target="_blank" rel="noopener" title="Snapchat">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2c3.866 0 7 3.134 7 7v6c0 3.866-3.134 7-7 7s-7-3.134-7-7V9c0-3.866 3.134-7 7-7z" stroke="currentColor" stroke-width="1.1" fill="none"/></svg>
+        </a>
+        <a href="mailto:itxxremo@gmail.com" title="Email">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 7.5l9 6 9-6" stroke="currentColor" stroke-width="1.1" fill="none"/><rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" stroke-width="1.1" fill="none"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <div style="height:16px"></div>
+
+    <div class="card neon-box">
+      <h3>Contact</h3>
+      <p style="margin:8px 0 0;font-size:14px">Instagram: <strong>xnr1___</strong><br>Snapchat: <strong>itxxremo_12</strong><br>Email: <strong>itxxremo@gmail.com</strong></p>
+    </div>
+
+    <footer>
+      © 2025 Remo. All Rights Reserved.<br>
+      Crafted in the Shadows, Released to the Web<br>
+      Designed & Developed with code and 💗 by remo..
+    </footer>
+
+  </aside>
+
+</div>
+
+  </main>
+</div><!-- Audio (user must provide file or edit src to an online file). Many browsers require a user gesture before playing audio. --><audio id="bg-audio" loop preload="auto">
+  <!-- Replace the src with your audio file path or URL. e.g. "assets/clima-lindo.mp3" -->
+  <source src="assets/clima-lindo.mp3" type="audio/mpeg">
+  Your browser does not support the audio element.
+</audio><div class="audio-toggle" aria-hidden="false">
+  <div style="font-size:13px;opacity:.9">Now playing: <strong>CLIMA LINDO</strong></div>
+  <button class="btn" id="audio-btn">Play</button>
+</div><script>
+/* -------------------------
+   Canvas particles + lines
+   - classic casual spread / current-like moving lines
+   - lightweight and interactive (mouse/touch)
+   -------------------------*/
+const canvas = document.getElementById('bg-canvas');
+const ctx = canvas.getContext('2d');
+let DPR = Math.max(1, window.devicePixelRatio || 1);
+let w, h, particles = [], mouse = {x: -9999, y: -9999, down:false};
+
+function resize(){
+  DPR = Math.max(1, window.devicePixelRatio || 1);
+  w = canvas.width = Math.floor(window.innerWidth * DPR);
+  h = canvas.height = Math.floor(window.innerHeight * DPR);
+  canvas.style.width = window.innerWidth + 'px';
+  canvas.style.height = window.innerHeight + 'px';
+  ctx.setTransform(DPR,0,0,DPR,0,0);
+}
+
+window.addEventListener('resize', resize);
+
+// initialize particles
+function initParticles(){
+  particles = [];
+  const count = Math.round(Math.min(160, Math.max(40, window.innerWidth / 8)));
+  for(let i=0;i<count;i++){
+    particles.push({
+      x: Math.random()*window.innerWidth,
+      y: Math.random()*window.innerHeight,
+      vx: (Math.random()-0.5)*0.6,
+      vy: (Math.random()-0.5)*0.6,
+      r: 1 + Math.random()*2,
+      life: Math.random()*200 + 100
+    });
+  }
+}
+
+// update
+function step(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+
+  // subtle gradient overlay
+  const grad = ctx.createLinearGradient(0,0,w, h);
+  grad.addColorStop(0, 'rgba(2,16,24,0.0)');
+  grad.addColorStop(1, 'rgba(3,8,14,0.02)');
+  ctx.fillStyle = grad;
+  ctx.fillRect(0,0,canvas.width,canvas.height);
+
+  // move particles and draw
+  for(let i=0;i<particles.length;i++){
+    const p = particles[i];
+    // slight flow toward right (current-like) with perlin-ish jitter
+    const flow = Math.sin((p.y + Date.now()/600) * 0.008) * 0.3;
+    p.vx += flow * 0.002;
+    p.vx *= 0.995; p.vy *= 0.995;
+    p.x += p.vx; p.y += p.vy;
+
+    // mouse interaction: attract when close or repel when pressed
+    const dx = p.x - mouse.x, dy = p.y - mouse.y; const dist = Math.sqrt(dx*dx+dy*dy);
+    if(dist < 120){
+      const force = (1 - dist/120) * (mouse.down ? -0.8 : 0.4);
+      p.vx += (dx/dist || 0) * force * 0.12;
+      p.vy += (dy/dist || 0) * force * 0.12;
+    }
+
+    // wrap edges
+    if(p.x < -20) p.x = window.innerWidth + 20;
+    if(p.x > window.innerWidth + 20) p.x = -20;
+    if(p.y < -20) p.y = window.innerHeight + 20;
+    if(p.y > window.innerHeight + 20) p.y = -20;
+
+    // draw particle
+    ctx.beginPath();
+    ctx.fillStyle = 'rgba(126,249,255,0.92)';
+    ctx.globalAlpha = 0.7 * (0.6 + Math.sin(p.life/50)*0.2);
+    ctx.arc(p.x, p.y, p.r, 0, Math.PI*2);
+    ctx.fill();
+    ctx.globalAlpha = 1;
+
+    // connect lines to nearby particles
+    for(let j=i+1;j<particles.length;j++){
+      const q = particles[j];
+      const dx2 = p.x-q.x, dy2 = p.y-q.y; const d2 = dx2*dx2+dy2*dy2;
+      if(d2 < 9000){ // connect threshold
+        const t = 1 - d2/9000;
+        ctx.beginPath();
+        ctx.strokeStyle = `rgba(126,249,255,${0.08 * t})`;
+        ctx.lineWidth = 1 * t;
+        ctx.moveTo(p.x,p.y);
+        ctx.lineTo(q.x,q.y);
+        ctx.stroke();
+      }
+    }
+
+    // slowly age
+    p.life -= 0.2;
+    if(p.life < 40){ p.r += 0.01; }
+    if(p.life < 0){ // respawn
+      p.x = Math.random()*window.innerWidth; p.y = Math.random()*window.innerHeight; p.vx = (Math.random()-0.5)*0.6; p.vy = (Math.random()-0.5)*0.6; p.r = 1 + Math.random()*2; p.life = Math.random()*220 + 100;
+    }
+  }
+
+  // faint scanning lines for 'classic' vibe
+  ctx.save();
+  ctx.globalCompositeOperation = 'lighter';
+  for(let i=0;i<3;i++){
+    ctx.beginPath();
+    const y = (Date.now()/10 + i*220) % (window.innerHeight*1.2) - 60;
+    ctx.moveTo(0,y);
+    ctx.lineTo(window.innerWidth, y + 40 + Math.sin(Date.now()/400 + i)*18);
+    ctx.strokeStyle = 'rgba(255,255,255,0.008)';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+  }
+  ctx.restore();
+
+  requestAnimationFrame(step);
+}
+
+// input
+window.addEventListener('mousemove', e => { mouse.x = e.clientX; mouse.y = e.clientY; });
+window.addEventListener('mousedown', e => { mouse.down = true; });
+window.addEventListener('mouseup', e => { mouse.down = false; });
+
+// touch support
+window.addEventListener('touchstart', e => { if(e.touches && e.touches[0]){ mouse.x = e.touches[0].clientX; mouse.y = e.touches[0].clientY; mouse.down = true; } }, {passive:true});
+window.addEventListener('touchmove', e => { if(e.touches && e.touches[0]){ mouse.x = e.touches[0].clientX; mouse.y = e.touches[0].clientY; } }, {passive:true});
+window.addEventListener('touchend', e => { mouse.down=false; });
+
+// init
+resize(); initParticles(); requestAnimationFrame(step);
+
+/* -------------------------
+   Audio controls (low volume by default)
+   - Browsers may block autoplay: user must press play for mobile.
+   -------------------------*/
+const audio = document.getElementById('bg-audio');
+const audioBtn = document.getElementById('audio-btn');
+const playPause = document.getElementById('play-pause');
+
+audio.volume = 0.08; // low volume as requested
+
+function updateUI(){
+  const playing = !audio.paused && !audio.ended;
+  audioBtn.textContent = playing ? 'Pause' : 'Play';
+  playPause.textContent = playing ? 'Pause' : 'Play';
+}
+
+audioBtn.addEventListener('click', async ()=>{
+  try{
+    if(audio.paused){
+      await audio.play();
+    } else { audio.pause(); }
+  }catch(e){ console.warn('Autoplay blocked, user gesture required.'); }
+  updateUI();
+});
+
+playPause.addEventListener('click', ()=>{ audioBtn.click(); });
+
+// hint: if audio has no source, disable UI
+if(!audio.querySelector('source') || !audio.querySelector('source').getAttribute('src')){
+  audioBtn.textContent = 'No Audio → Add file';
+  playPause.style.display = 'none';
+}
+
+</script><!--
+  Usage notes:
+  - Put your audio file 'clima-lindo.mp3' into ./assets/ and keep the path or edit the <source> src attribute.
+  - Many mobile browsers require a user gesture to start audio. Tap the "Play" button once.
+  - You can tune particle density by adjusting count in initParticles() if desired.
+--></body>
+      </html>      
