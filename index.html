@@ -1,35 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Remo — Portfolio</title>
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-  <style>
-    :root{
-      --bg:#071018;
-      --neon:#00f0ea;
-      --accent:#6bf0ff;
-      --glass: rgba(255,255,255,0.04);
-      --glass-2: rgba(0,255,235,0.06);
-    }
-    *{box-sizing:border-box}
-    html,body{height:100%;margin:0;font-family:Poppins,system-ui,Arial; color:#dfefff;background:linear-gradient(180deg,#02050a 0%,#071018 60%);}
-#wallpaper{position:fixed;inset:0;background-size:cover;background-position:center;filter:contrast(1.05) saturate(1.1);z-index:0;transition:opacity 1s ease}
-#wallpaper.dim{opacity:0.35}
-
-/* canvas for moving lines */
-canvas#vfx{position:fixed;inset:0;z-index:1;pointer-events:none}
-
-/* center content */
-.wrap{position:relative;z-index:3;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:40px}
-
-.card{
-  width:min(900px,95%);
-  background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.25));
-  border-radius:16px;padding:28px;border:1px solid rgba(0,255,230,0.08);backdrop-filter:blur(8px);
-  box-shadow:0 8px 40px rgba(0,0,0,0.6),0 0 30px rgba(0,255,235,0.02) inset;display:grid;grid-template-columns:1fr 360px;gap:20px;align-items:start
+<!(0,0,0,0.6),0 0 30px rgba(0,255,235,0.02) inset;display:grid;grid-template-columns:1fr 360px;gap:20px;align-items:start
 }
 
 @media(max-width:880px){.card{grid-template-columns:1fr; padding:20px}}
