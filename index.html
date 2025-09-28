@@ -1,22 +1,309 @@
-<        
-        /*         }
-
-        /* Footer and Motto */
-        .motto {
-            font-size: 1.5em;
-            color: #fff;
-            text-align: center;
-            margin: 40px 0 20px;
-            font-style: italic;
-            text-shadow: 0 0 10px var(--neon-color);
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Remo's Digital Hub | Aspiring Ethical Hacker</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* CSS Variables for easy color management */
+        :root {
+            --neon-color: #00ffcc; /* Bright Cyan/Teal */
+            --bg-dark: #0a0a0c;
+            --text-light: #e0e0e0;
+            --glow-spread: 0 0 15px rgba(0, 255, 204, 0.8), 0 0 25px rgba(0, 255, 204, 0.5);
+            --border-radius-main: 15px;
+            --box-shadow-focus: 0 0 15px var(--neon-color);
         }
 
-                        
-                <p>🧑🏻‍💻 Beyond coding, I am curious about how the internet works, how systems can be secured, and how creativity can blend with technology. My hobbies include listening to music, exploring new software, and sometimes gaming to refresh my mind.</p>
-            </div>
-        </section>
+        /* ---------------------------------------------------- */
+        /* BASE STYLES & FONT */
+        /* ---------------------------------------------------- */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
-        <section id="skills-projects">
-            
-            <div id="skills" class="neon-box">
-                <
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+            /* Hide potential overflow from background effect */
+        }
+
+        h1, h2 {
+            font-weight: 700;
+            color: var(--neon-color);
+            text-shadow: 0 0 8px rgba(0, 255, 204, 0.6);
+            margin-bottom: 0.75rem;
+        }
+
+        p {
+            margin-bottom: 1rem;
+        }
+
+        /* ---------------------------------------------------- */
+        /* LIVE CURRENT/LIGHTNING BACKGROUND EFFECT */
+        /* ---------------------------------------------------- */
+        .live-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            /* Animated background for a "live current flow" visual */
+            background: radial-gradient(circle at 50% 50%, rgba(0, 255, 204, 0.1) 0%, rgba(10, 10, 12, 0.8) 70%),
+                        repeating-linear-gradient(
+                            135deg,
+                            rgba(0, 255, 204, 0.05),
+                            rgba(0, 255, 204, 0.05) 1px,
+                            transparent 1px,
+                            transparent 15px
+                        );
+            background-size: 100% 100%, 30px 30px;
+            animation: pulse-glow 15s infinite alternate; /* Subtle breathing effect */
+        }
+
+        @keyframes pulse-glow {
+            0% {
+                background-position: 0% 0%, 0 0;
+            }
+            100% {
+                background-position: 100% 100%, 0 0;
+            }
+        }
+
+        /* ---------------------------------------------------- */
+        /* CONTAINER & LAYOUT */
+        /* ---------------------------------------------------- */
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0;
+            flex-grow: 1;
+        }
+
+        .grid-layout {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        /* ---------------------------------------------------- */
+        /* STYLIZED BOXES (The Core Design) */
+        /* ---------------------------------------------------- */
+        .content-box {
+            background-color: rgba(10, 10, 12, 0.75); /* Semi-transparent dark background */
+            padding: 30px;
+            border-radius: var(--border-radius-main);
+            border: 2px solid var(--neon-color); /* Neon Border */
+            box-shadow: var(--glow-spread); /* Subtle Glow Effect */
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+            backdrop-filter: blur(5px); /* Subtle blur behind the box */
+            -webkit-backdrop-filter: blur(5px);
+        }
+
+        /* Interactive Hover/Touch Animation */
+        .content-box:hover {
+            transform: translateY(-5px) scale(1.02); /* Lift and grow slightly */
+            box-shadow: 0 0 20px var(--neon-color), 0 0 35px rgba(0, 255, 204, 0.7); /* Brighter Glow */
+            background-color: rgba(15, 15, 17, 0.9);
+        }
+
+        /* Special style for the first 'About Me' section to make it stand out */
+        .content-box:first-child {
+            grid-column: 1 / -1; /* Span full width on all screens */
+        }
+
+        .emoji {
+            margin-right: 10px;
+        }
+
+        /* ---------------------------------------------------- */
+        /* SECTION SPECIFIC STYLES */
+        /* ---------------------------------------------------- */
+
+        /* Skills/Projects Lists */
+        .list-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+            padding: 5px 0;
+            border-bottom: 1px dashed rgba(0, 255, 204, 0.2);
+        }
+        .list-item:last-child {
+            border-bottom: none;
+        }
+
+        .list-item i {
+            color: var(--neon-color);
+            margin-right: 15px;
+            font-size: 1.2em;
+            text-shadow: 0 0 5px var(--neon-color);
+        }
+
+        /* Connect Section - Logos/Icons */
+        .social-links {
+            display: flex;
+            gap: 25px;
+            margin-top: 20px;
+            justify-content: center;
+        }
+
+        .social-links a {
+            display: block;
+            font-size: 3em;
+            color: var(--neon-color);
+            transition: transform 0.2s ease, text-shadow 0.2s ease;
+            text-decoration: none;
+            /* Remove default underline */
+        }
+
+        .social-links a:hover {
+            transform: scale(1.15) rotate(-3deg);
+            text-shadow: 0 0 10px var(--neon-color), 0 0 20px rgba(0, 255, 204, 0.8);
+            cursor: pointer;
+        }
+
+        /* ---------------------------------------------------- */
+        /* FOOTER & MOTTOS */
+        /* ---------------------------------------------------- */
+        footer {
+            text-align: center;
+            padding: 2rem 1rem;
+            margin-top: 3rem;
+            border-top: 1px solid rgba(0, 255, 204, 0.3);
+            background-color: rgba(10, 10, 12, 0.5);
+        }
+
+        .motto-box {
+            background-color: var(--bg-dark);
+            border: 1px solid var(--neon-color);
+            padding: 15px;
+            border-radius: var(--border-radius-main);
+            max-width: 500px;
+            margin: 1.5rem auto;
+            box-shadow: var(--glow-spread);
+        }
+
+        .motto-box p {
+            margin: 0;
+            font-style: italic;
+            font-weight: 600;
+            color: var(--neon-color);
+            text-shadow: 0 0 5px rgba(0, 255, 204, 0.7);
+        }
+
+        /* Final Closing Message */
+        .closing-message {
+            margin-top: 2rem;
+            font-size: 1.1em;
+            font-weight: 600;
+            color: var(--neon-color);
+            animation: flicker 1.5s infinite alternate;
+        }
+
+        @keyframes flicker {
+            0%, 19.999% {
+                opacity: 1;
+                text-shadow: 0 0 4px var(--neon-color);
+            }
+            20%, 20.999% {
+                opacity: 0.8;
+                text-shadow: none;
+            }
+            21%, 23.999% {
+                opacity: 1;
+                text-shadow: 0 0 4px var(--neon-color);
+            }
+            24%, 24.999% {
+                opacity: 0.9;
+                text-shadow: none;
+            }
+            70%, 100% {
+                opacity: 1;
+                text-shadow: 0 0 4px var(--neon-color), 0 0 10px rgba(0, 255, 204, 0.5);
+            }
+        }
+
+
+    </style>
+</head>
+
+<body>
+    <div class="live-bg"></div>
+
+    <div class="container">
+        <header style="text-align: center; margin-bottom: 3rem;">
+            <h1><span class="emoji">⚡</span> RE-M O // C O D E <span class="emoji">⚡</span></h1>
+            <p style="font-style: italic; color: var(--neon-color); text-shadow: var(--box-shadow-focus);">// Digital Identity Interface // Access Granted</p>
+        </header>
+
+        <main class="grid-layout">
+            <section class="content-box">
+                <h2><span class="emoji">🚀</span> About Me</h2>
+                <p>Hello! My name is **Remo**, and I’m an enthusiastic **8th-grade student from Bihar** with a deep passion for **computer science and technology**. Ever since I was introduced to the digital world, I’ve been fascinated by how code shapes everything around us. I spend most of my time learning programming languages such as **C++ and HTML**, experimenting with **CSS** for design, and exploring the exciting field of **ethical hacking and cybersecurity**.</p>
+                <p><span class="emoji">📊</span> I believe in **smart work, creativity, and a positive mindset**. Instead of memorizing blindly, I enjoy understanding concepts deeply and applying them to real-life projects. I often challenge myself with new tools and technologies, whether it’s building a simple webpage, trying out **Linux systems**, or learning the logic behind hacking in a safe and ethical way.</p>
+                <p><span class="emoji">📚</span> Although I consider myself an **“average” student** in academics, I have my own perspective: if someone can score 80% by studying just two days before the exam, then achieving 100% would simply require ten days of preparation. This thought keeps me motivated to **push my limits and improve step by step**.</p>
+                <p><span class="emoji">🧑🏻‍💻</span> Beyond coding, I am curious about how the internet works, how systems can be secured, and how creativity can blend with technology. My hobbies include **listening to music, exploring new software, and sometimes gaming** to refresh my mind.</p>
+            </section>
+
+            <section class="content-box">
+                <h2><span class="emoji">🔧</span> Skills & Tools</h2>
+                <div class="list-item"><i class="fas fa-code"></i> <strong>Languages:</strong> C++, HTML, CSS (beginner but improving every day)</div>
+                <div class="list-item"><i class="fas fa-terminal"></i> <strong>Interests:</strong> Ethical Hacking, Cybersecurity, Web Development</div>
+                <div class="list-item"><i class="fab fa-github"></i> <strong>Platforms:</strong> GitHub, Kali Linux, Termux</div>
+            </section>
+
+            <section class="content-box">
+                <h2><span class="emoji">📌</span> Projects & Experiments</h2>
+                <div class="list-item"><i class="fas fa-globe"></i> Created my own personal website (this one!) to showcase my learning journey.</div>
+                <div class="list-item"><i class="fas fa-palette"></i> Experimented with different web design effects and UI concepts.</div>
+                <div class="list-item"><i class="fas fa-shield-alt"></i> Started exploring cybersecurity tools and the basics of penetration testing.</div>
+            </section>
+
+            <section class="content-box">
+                <h2><span class="emoji">🎯</span> Future Goals</h2>
+                <p>My dream is to become a **professional cybersecurity expert and ethical hacker**, contributing to a safer and smarter digital world. In the short term, I aim to **improve my coding knowledge, build more projects, and keep learning** every single day.</p>
+            </section>
+
+            <section class="content-box" style="text-align: center;">
+                <h2><span class="emoji">🌐</span> Connect With Me</h2>
+                <p>I’d love to connect and share ideas! You can reach me through my social media handles below. Instead of plain text links, I prefer showcasing only the official app icons with a modern, sleek visual style:</p>
+
+                <div class="social-links">
+                    <a href="https://www.instagram.com/xnr1___?igsh=dHp2MWRyY2JyYnNi" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.snapchat.com/add/itxxremo_12?share_id=rP0J7GZUXLc&locale=en-GB" target="_blank" aria-label="Snapchat"><i class="fab fa-snapchat-ghost"></i></a>
+                    <a href="mailto:itxxremo@gmail.com" target="_blank" aria-label="Gmail"><i class="fas fa-envelope"></i></a>
+                </div>
+                <p style="margin-top: 15px; font-size: 0.85em;">Instagram: xnr1___ | Snapchat: itxxremo_12 | Gmail: itxxremo@gmail.com</p>
+            </section>
+        </main>
+    </div>
+
+    <footer>
+        <div class="motto-box">
+            <p><span class="emoji">⚡</span> Personal Motto:
+            <br>“Hack the system, but never the trust.”</p>
+        </div>
+
+        <p>© 2025 Remo. All Rights Reserved.</p>
+        <p style="font-size: 0.9em; margin-top: 5px;">Crafted in the Shadows, Released to the Web....</p>
+        <p style="font-size: 0.9em;">Designed & Developed with code and <span class="emoji">💗</span> by remo</p>
+
+        <p class="closing-message">
+            *** Looking best visuals: Live Current Lines Activated ***
+        </p>
+    </footer>
+
+</body>
+        </html>
