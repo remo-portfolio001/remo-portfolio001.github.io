@@ -1,85 +1,4 @@
 <!doctype html>
-
-<html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Remo — Neon Classic Casual</title>
-  <meta name="description" content="Personal site for Remo — neon classic-casual particle background, responsive UI, and background music CLIMA LINDO." />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
-  <style>
-    :root{--bg:#061020;--card-bg:rgba(255,255,255,0.02);--neon:#7ef9ff;--accent:#ff6bcb;--glass:rgba(255,255,255,0.03);--card-radius:16px;--font:'Inter',system-ui,Segoe UI,Roboto,Helvetica,Arial}
-    *{box-sizing:border-box}
-    html,body{height:100%;margin:0;background:var(--bg);font-family:var(--font);color:#e6f6ff}
-    #bg-canvas{position:fixed;inset:0;z-index:0}
-    .wrap{position:relative;z-index:2;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:40px 18px}
-    .site{width:100%;max-width:1100px;margin:0 auto}header{display:flex;align-items:center;justify-content:space-between;margin-bottom:22px}
-.brand{display:flex;align-items:center;gap:12px}
-.logo{width:56px;height:56px;border-radius:12px;display:grid;place-items:center;background:linear-gradient(135deg,var(--neon),var(--accent));box-shadow:0 8px 30px rgba(126,249,255,0.06);font-weight:800;color:#021018}
-h1{font-size:18px;margin:0}
-p.tag{margin:0;font-size:13px;opacity:0.95}
-
-.grid{display:grid;grid-template-columns:1fr 360px;gap:20px;align-items:start}
-
-.card{background:var(--card-bg);backdrop-filter:blur(8px);border-radius:var(--card-radius);padding:16px;border:1px solid rgba(255,255,255,0.03);position:relative;overflow:hidden;transition:transform .28s,box-shadow .28s}
-.card:hover{transform:translateY(-8px);box-shadow:0 24px 60px rgba(2,16,24,0.6)}
-
-.neon-box{border-radius:14px;padding:12px;border:1.6px solid rgba(126,249,255,0.06);background:linear-gradient(180deg,rgba(255,255,255,0.01),rgba(255,255,255,0.008));box-shadow:0 10px 30px rgba(126,249,255,0.02);transition:transform .25s}
-.neon-box:hover{transform:translateY(-6px) scale(1.01)}
-.neon-box::after{content:'';position:absolute;inset:0;border-radius:14px;pointer-events:none;box-shadow:0 0 40px rgba(126,249,255,0.04)}
-
-.about p{margin:10px 0;line-height:1.5;color:rgba(230,246,255,0.96)}
-.skills{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
-.chip{padding:8px 12px;border-radius:999px;background:var(--glass);font-size:13px;border:1px solid rgba(255,255,255,0.02)}
-
-.sidebar{position:sticky;top:28px}
-.profile{display:flex;gap:12px;align-items:center}
-.avatar{width:96px;height:96px;border-radius:14px;background:linear-gradient(135deg,var(--neon),var(--accent));display:grid;place-items:center;font-weight:900;color:#021018}
-
-.socials{display:flex;gap:10px;margin-top:12px}
-.socials a{display:inline-grid;place-items:center;width:46px;height:46px;border-radius:10px;background:rgba(255,255,255,0.02);text-decoration:none}
-
-footer{margin-top:18px;padding:14px;border-radius:12px;background:linear-gradient(180deg,rgba(255,255,255,0.006),rgba(255,255,255,0.004));text-align:center;font-size:13px;color:rgba(230,246,255,0.9);border:1px solid rgba(255,255,255,0.02)}
-
-.audio-toggle{position:fixed;right:18px;bottom:18px;z-index:6;background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));backdrop-filter:blur(8px);border-radius:14px;padding:10px 14px;border:1px solid rgba(255,255,255,0.04);display:flex;gap:12px;align-items:center}
-.btn{cursor:pointer;border:0;padding:8px 12px;border-radius:10px;background:transparent;color:var(--neon);font-weight:700}
-
-.meta-row{display:flex;gap:10px;align-items:center}
-.info-grid{display:flex;gap:12px;align-items:flex-start}
-.small-box{background:var(--glass);padding:10px;border-radius:12px;border:1px solid rgba(255,255,255,0.02);width:110px;text-align:center}
-
-@media (max-width:980px){.grid{grid-template-columns:1fr}.sidebar{position:relative;top:0}.avatar{width:80px;height:80px}}
-@media (max-width:520px){.wrap{padding:18px 12px}.logo{width:48px;height:48px}}
-
-  </style>
-</head>
-<body>
-<canvas id="bg-canvas" aria-hidden="true"></canvas>
-<div class="wrap"><main class="site">
-  <header>
-    <div class="brand"><div class="logo">R</div><div><h1>Remo</h1><p class="tag">Neon · Classic Casual · Web Experimenter</p></div></div>
-    <nav aria-label="primary"><button class="btn" id="play-pause">Play</button></nav>
-  </header>  <div class="grid">
-    <section class="cards"><article class="card neon-box about">
-    <div class="meta-row"><h2 style="margin:0">🚀 About Me</h2></div>
-    <p>Hello! My name is <strong>Remo</strong>, and I’m an enthusiastic 8th-grade student from Bihar with a deep passion for computer science and technology. Ever since I discovered the digital world, I’ve been fascinated by how code shapes everything around us. I spend my time learning programming languages like <strong>C++</strong> and <strong>HTML</strong>, experimenting with <strong>CSS</strong> for design, and exploring ethical hacking and cybersecurity.</p>
-    <p>I believe in smart work, creativity, and a positive mindset. Instead of rote memorization, I focus on understanding concepts deeply and applying them in projects. I enjoy building web pages, trying Linux tools, and learning the logic behind hacking in a safe and ethical way.</p>
-    <div class="skills" aria-hidden>
-      <span class="chip">C++</span>
-      <span class="chip">HTML</span>
-      <span class="chip">CSS</span>
-      <span class="chip">Ethical Hacking</span>
-      <span class="chip">GitHub</span>
-      <span class="chip">Kali/Termux</span>
-    </div>
-  </article>
-
-  <article class="card neon-box">
-    <h2 style="margin-top:0">📌 Projects & Experiments</h2>
-    <p>Created this personal website to showcase my learning journey. I experiment with web design effects, UI concepts, and the basics of cybersecurity and penetration testing.</p>
-  </article>
-
-  <article class="card neon-box">
     <h2 style="margin-top:0">🎯 Future Goals</h2>
     <p>I aim to become a professional cybersecurity expert and ethical hacker, contributing to a safer digital world. For now, I’m focused on improving my coding skills and building more projects every day.</p>
   </article>
@@ -147,36 +66,7 @@ const canvas = document.getElementById('bg-canvas');
 const ctx = canvas.getContext('2d');
 let DPR = Math.max(1, window.devicePixelRatio || 1);
 let w, h, particles = [], mouse = {x:-9999,y:-9999,down:false};
-
-function resize(){
-  DPR = Math.max(1, window.devicePixelRatio || 1);
-  w = canvas.width = Math.floor(window.innerWidth * DPR);
-  h = canvas.height = Math.floor(window.innerHeight * DPR);
-  canvas.style.width = window.innerWidth + 'px';
-  canvas.style.height = window.innerHeight + 'px';
-  ctx.setTransform(DPR,0,0,DPR,0,0);
-}
-window.addEventListener('resize', resize);
-
-function initParticles(){
-  particles = [];
-  const count = Math.round(Math.min(220, Math.max(60, window.innerWidth / 6)));
-  for(let i=0;i<count;i++){
-    particles.push({x:Math.random()*window.innerWidth,y:Math.random()*window.innerHeight,vx:(Math.random()-0.5)*1.2,vy:(Math.random()-0.5)*1.2,r:1+Math.random()*2,life:Math.random()*220+100});
-  }
-}
-
-function step(){
-  ctx.clearRect(0,0,canvas.width,canvas.height);
-  // subtle overlay
-  const grad = ctx.createLinearGradient(0,0,w,h);
-  grad.addColorStop(0,'rgba(2,16,24,0.0)');
-  grad.addColorStop(1,'rgba(3,8,14,0.02)');
-  ctx.fillStyle = grad; ctx.fillRect(0,0,w,h);
-
-  // move & draw
-  for(let i=0;i<particles.length;i++){
-    const p = particles[i];
+particles[i];
     // stronger flowing current to the right with jitter
     const flow = Math.sin((p.y + Date.now()/400) * 0.012) * 0.6; // faster
     p.vx += flow * 0.0025;
